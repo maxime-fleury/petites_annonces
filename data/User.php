@@ -19,9 +19,9 @@ class User{
     private $login;
     private $email;
     private $avatar;
-    private $dbh;
+    public $dbh;
     public function __contruct($dbh){
-        $this->dbh = $dbh;
+        $this->dbh = $GLOBALS['dbh'];
         $this->avatar = null;
     }
     public function getPassword(){
@@ -35,7 +35,7 @@ class User{
         $this->login = $login;
         $query = "SELECT * FROM User WHERE login='$this->login' AND password='$this->password'";
         $count = 0;
-        foreach ($this->dbh->query($query) as $row) {
+        foreach ($GLOBALS['dbh']->query($query) as $row) {
             $this->id = $row[0];
             $this->email = $row[3];
             $this->avatar = $row[4];
@@ -75,7 +75,7 @@ class User{
     public function addToDb(){
         $query = "SELECT login, count(login) FROM USER where login='$this->login'";
         $exists = 0;
-        foreach  ($this->dbh->query($query) as $row) {
+        foreach  ($GLOBALS['dbh']->query($query) as $row) {
             $exists = $row[1];
         }
         if($exists != 0){
@@ -83,9 +83,9 @@ class User{
             return 0;
         } 
         else{
-            $query = "INSERT INTO USER(login, password, email, avatar) values($this->login, $this->password, $this->email, $this->avatar)";
+            $query = "INSERT INTO USER(login, password, email, avatar) values('$this->login', '$this->password', '$this->email', '$this->avatar')";
             $exists = 0;
-            if($this->dbh->query($query)){
+            if($GLOBALS['dbh']->query($query)){
                 echo "Nouvelle Utilisateur créé !";
                 return 1;
             }

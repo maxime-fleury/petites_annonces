@@ -3,10 +3,12 @@ $dbname = "post_ads";
 $dsn = 'mysql:dbname=' . $dbname . ';host=localhost';
 $user = 'root';
 $password = '';
+global $dbh;
 
 try {
-    $dbh = new PDO($dsn, $user, $password);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $GLOBALS['dbh'] = new PDO($dsn, $user, $password);
+    $GLOBALS['dbh']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh = $GLOBALS['dbh'];
 }
 catch(Exception $e) {
     echo 'Exception -> ';

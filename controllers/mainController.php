@@ -2,6 +2,7 @@
 require 'data/config.php';
 $request = $_SERVER['REQUEST_URI'];
 $baseUrl = "/post_ads/petites_annonces";
+$title = "Welcome !";
 require "./templates/header.php";
 
 switch ($request) {
