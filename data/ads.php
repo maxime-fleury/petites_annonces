@@ -7,7 +7,8 @@ $class_elements = array(
     'pic' => array("type" => 'VARCHAR', "length" => 255, "null" => true, "isPrimary" => false, "form" => 1),
     'descr' => array("type" => 'VARCHAR', "length" => 255, "null" => false, "isPrimary" => false, "form" => 1),
     'cat' => array("type" => 'VARCHAR', "length" => 255, "null" => false, "isPrimary" => false, "form" => 1),
-    'price' => array("type" => 'INTEGER', "length" => 10, "null" => false, "isPrimary" => false, "form" =>1),
+    'price' => array("type" => 'INTEGER', "length" => 10, "null" => false, "isPrimary" => false, "form" => 1),
+    'userId' => array("type" => 'INTEGER', "length" => 10, "null" => false, "isPrimary" => false, "form" => 0)
 );
 //'form' => 0, hidden from all forms
 //'form' => 1, never hidden
@@ -23,7 +24,7 @@ class Ads{
     private $price;
     private $userid;
     public function  __construct($dbh){
-
+        $this->$dbh = $GLOBALS['dbh'];
     }
 
     public function getPrice(){
@@ -71,8 +72,10 @@ class Ads{
     public function createAd($dbh){
         $this->id = "";
     }
+    public function addToDb(){
+        //todo
+    }
 }
-$ads = new Ads($dbh);
 
 /*
 foreach($class_elements as $key => $value){

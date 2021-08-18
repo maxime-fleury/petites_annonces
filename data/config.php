@@ -52,14 +52,14 @@ if (!function_exists('getClassStr'))   {
     function getClassStr($class_elements){//to make the database using $class_elements
         $res = "";
         $count = 0;
-        foreach($class_elements as $key => $value){
+        foreach($class_elements as $key => $values){
             $res .= $count == 0 ? '':', ';
-        $res .=   $key . " " . $value['type'] . "(" . $value['length'] . ")";
-        if($value['null']){
+        $res .=   $key . " " . $values['type'] . "(" . $values['length'] . ")";
+        if($values['null']){
             $res .= " NULL ";
         }else
             $res .= " NOT NULL ";
-            if($value['isPrimary']){
+            if($values['isPrimary']){
                 $res .= " PRIMARY KEY AUTO_INCREMENT";
             }
         $count++;
