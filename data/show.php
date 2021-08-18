@@ -12,6 +12,7 @@ eval('$ce = new '.ucfirst($show_class).'();$class_elements = $ce->class_elements
     $ObjectS = $ce->loadX(10, $offset);
 foreach($class_elements as $keys => $cElms){
     foreach($ObjectS as $el => $el_){
-        eval("echo \$el->get$keys();");
+        $ucKeys = ucfirst($keys);
+        eval("echo \$el_->get$ucKeys();");
     }
 }

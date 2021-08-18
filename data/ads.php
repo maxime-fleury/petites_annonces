@@ -59,31 +59,41 @@ class Ads{
         return $this->userid;
     }
     public function setPrice($price){
-        $this->price = $price;
+        $this->price = intval($price);
+        return $this;
     }
     public function setId($id){
         $this->id = $id;
+        return $this;
     }
     public function setPic($pic){
        $this->pic = $pic;
+       return $this;
     }
     public function setCat($cat){
         $this->cat = $cat;
+        return $this;
     }
-    public function setDesc($descr){
+    public function setDescr($descr){
         $this->descr = $descr;
+        return $this;
     }
     public function setTitle($title){
         $this->title = $title;
+        return $this;
     }
     public function setUserId($id){
         $this->userid = $id;
+        return $this;
     }
     public function createAd($dbh){
         $this->id = "";
     }
     public function addToDb(){
-        //todo
+        $this->setUserId(0);
+        $query = "INSERT INTO ads VALUES(null, '". $this->getTitle()."', '".$this->getPic()."', '".$this->getDescr()."', '".$this->getCat()."', ".$this->getPrice().", ".$this->getUserId().")";
+        echo "<br>".$query."<br>";
+        $GLOBALS['dbh']->query($query);
     }
     public function load($id){
         //check if this element exists;
@@ -91,19 +101,17 @@ class Ads{
         $count = 0;
         $query = "SELECT * FROM ads WHERE id = $id";
         foreach ($GLOBALS['dbh']->query($query) as $row) {
-            $this->setPrice($row["price"]);
-            $this->setTitle($row["title"]);
-            $this->setPic($row["pic"]);
-            $this->setDescr($row["descr"]);
-            $this->setUserId($row["userId"]);
-            
+            $this->setPrice($row["price"])
+                 ->setTitle($row["title"])
+                 ->setPic($row["pic"])
+                 ->setDescr($row["descr"])
+                 ->setUserId($row["userId"])
+                 ->setCat($row["cat"]);
             $count++;
         }
         return $count;
     }
-    private function loadEntityById($id){
-        $res = new Ads();
-    }
+
     public function loadX($amount, $offset){
        $count = 0;
         $res = array();
@@ -114,12 +122,13 @@ class Ads{
        foreach ($GLOBALS['dbh']->query($query) as $row) 
        {
             $res_ = new Ads();
-            $res_->setPrice($row["price"]);
-            $res_->setTitle($row["title"]);
-            $res_->setPic($row["pic"]);
-            $res_->setDescr($row["descr"]);
-            $res_->setUserid($row["userId"]);
-            $res_->setCat($row['cat']);
+            $res_->setId($row['id'])
+                 ->setPrice($row["price"])
+                 ->setTitle($row["title"])
+                 ->setPic($row["pic"])
+                 ->setDescr($row["descr"])
+                 ->setUserid($row["userId"])
+                 ->setCat($row['cat']);
             $res[$count++] = $res_;
       }
       return $res;

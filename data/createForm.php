@@ -71,12 +71,14 @@ foreach($class_elements as $key => $jvalue){
 }
 if($form_is_valid){
     echo "Le formulaire est bien validé";
-    eval('$obj = new ' . $class . '($dbh);');
+    eval('$obj = new ' . $form_class . '();');
     for($i = 0; $i < $data_count; $i++){
         $nkey = $DATA[$i];
         $nvalue = $_POST[  $DATA[$i] ];
         //set all posts values to the object
-        eval('$obj->set'.$DATA[$i].'(\''.$nvalue.'\');');
+        echo '$obj->set'.ucfirst($DATA[$i]).'(\''.$nvalue.'\');';
+        echo "<br>";
+        eval('$obj->set'.ucfirst($DATA[$i]).'(\''.$nvalue.'\');');
         //eval('echo $obj->get'.$DATA[$i].'(\''.$nvalue.'\');');
     }
     switch($form_type){
