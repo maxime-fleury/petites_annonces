@@ -1,15 +1,22 @@
 <?php
+session_start();
 require 'data/config.php';
 require 'controllerManager.php';
 $title = "Welcome !";
 require "./templates/header.php";
 $cm = new controllerManager();
-$cm->addRoute(
-        "/",
-        null,
-        null,
-        array( "index" )
-    )->addRoute(
+$cm->
+addRoute(
+    "/",
+    array("show_class::ads", "amount::10", "show_type::pages"),
+    array( "User", "ads", "show"),
+    array( "index" )
+)->addRoute(
+    "/index",
+    array("show_class::ads", "amount::10", "show_type::pages"),
+    array( "User", "ads", "show"),
+    array( "index" )
+)->addRoute(
         "/inscription",
         array( "form_class::User", "form_type::register" ),
         array( "User", "createForm" ),
@@ -31,11 +38,17 @@ $cm->addRoute(
         array( "annonce" )// require all ./template/{page1}.php ...... can add as many as you want
     )->addRoute(
         "/add",//path
-        array( "form_class::ads", "form_type::register" ),
+        array( "form_class::ads", "form_type::register", "session_restricted::true" ),
         array( "User", "ads", "createForm" ),
         array( "connexion" )
-        );
-$cm->redirect();
+        )
+        ->addRoute(
+            "/disconnect",
+            null,
+            null,
+            array("disconnect")
+        )
+        ->redirect();
 
 
 /*

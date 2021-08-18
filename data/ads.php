@@ -1,6 +1,6 @@
 <?php
 require "config.php";
-$class = "Ads";
+
 $class_elements = array(
     'id' => array("type" => 'INTEGER', "length" => 15, "null" => false, "isPrimary" => true, "form" => 0),
     'title' => array("type" => 'VARCHAR', "length" => 255, "null" => false, "isPrimary" => false, "form" => 1),
@@ -23,8 +23,18 @@ class Ads{
     private $cat;
     private $price;
     private $userid;
-    public function  __construct($dbh){
-        $this->$dbh = $GLOBALS['dbh'];
+    public $class_elements;
+    public function  __construct(){
+        $this->dbh = $GLOBALS['dbh'];
+        $this->class_elements = array(
+            'id' => array("type" => 'INTEGER', "length" => 15, "null" => false, "isPrimary" => true, "form" => 0),
+            'title' => array("type" => 'VARCHAR', "length" => 255, "null" => false, "isPrimary" => false, "form" => 1),
+            'pic' => array("type" => 'VARCHAR', "length" => 255, "null" => true, "isPrimary" => false, "form" => 1),
+            'descr' => array("type" => 'VARCHAR', "length" => 255, "null" => false, "isPrimary" => false, "form" => 1),
+            'cat' => array("type" => 'VARCHAR', "length" => 255, "null" => false, "isPrimary" => false, "form" => 1),
+            'price' => array("type" => 'INTEGER', "length" => 10, "null" => false, "isPrimary" => false, "form" => 1),
+            'userId' => array("type" => 'INTEGER', "length" => 10, "null" => false, "isPrimary" => false, "form" => 0)
+        );
     }
 
     public function getPrice(){
@@ -74,6 +84,45 @@ class Ads{
     }
     public function addToDb(){
         //todo
+    }
+    public function load($id){
+        //check if this element exists;
+        $this->id = $id;
+        $count = 0;
+        $query = "SELECT * FROM ads WHERE id = $id";
+        foreach ($GLOBALS['dbh']->query($query) as $row) {
+            $this->setPrice($row["price"]);
+            $this->setTitle($row["title"]);
+            $this->setPic($row["pic"]);
+            $this->setDescr($row["descr"]);
+            $this->setUserId($row["userId"]);
+            
+            $count++;
+        }
+        return $count;
+    }
+    private function loadEntityById($id){
+        $res = new Ads();
+    }
+    public function loadX($amount, $offset){
+       $count = 0;
+        $res = array();
+       $query =  "SELECT * FROM ads ORDER BY id DESC LIMIT $amount";
+       if($offset != 0){
+           $query .= " OFFSET $offset ROWS";
+       }
+       foreach ($GLOBALS['dbh']->query($query) as $row) 
+       {
+            $res_ = new Ads();
+            $res_->setPrice($row["price"]);
+            $res_->setTitle($row["title"]);
+            $res_->setPic($row["pic"]);
+            $res_->setDescr($row["descr"]);
+            $res_->setUserid($row["userId"]);
+            $res_->setCat($row['cat']);
+            $res[$count++] = $res_;
+      }
+      return $res;
     }
 }
 

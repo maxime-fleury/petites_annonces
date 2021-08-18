@@ -1,5 +1,6 @@
 <?php
 require 'config.php';
+
 $class = "User";
 $class_elements = array(
     'id' => array("type" => 'INTEGER', "length" => 15, "null" => false, "isPrimary" => true, "form" => 0),
@@ -20,9 +21,17 @@ class User{
     private $email;
     private $avatar;
     public $dbh;
+    public $class_elements;
     public function __contruct($dbh){
         $this->dbh = $GLOBALS['dbh'];
         $this->avatar = null;
+        $this->class_elements = array(
+            'id' => array("type" => 'INTEGER', "length" => 15, "null" => false, "isPrimary" => true, "form" => 0),
+            'login' => array("type" => 'VARCHAR', "length" => 255, "null" => false, "isPrimary" => false, "form" => 1),
+            'password' => array("type" => 'VARCHAR', "length" => 255, "null" => false, "isPrimary" => false, "form" => 1),
+            'email' => array("type" => 'VARCHAR', "length" => 255, "null" => false, "isPrimary" => false, "form" => 2),
+            'avatar' => array("type" => 'VARCHAR', "length" => 255, "null" => true, "isPrimary" => false, "form" => 2)
+        );
     }
     public function getPassword(){
         return $this->password;
@@ -30,9 +39,7 @@ class User{
     public function setPassword($password){
         $this->password = $password;
     }
-    public function loadUserFromDb($login, $password){
-        $this->password = $password;
-        $this->login = $login;
+    public function loadUserFromDb(){
         $query = "SELECT * FROM User WHERE login='$this->login' AND password='$this->password'";
         $count = 0;
         foreach ($GLOBALS['dbh']->query($query) as $row) {

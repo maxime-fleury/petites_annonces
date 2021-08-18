@@ -75,7 +75,7 @@ if($form_is_valid){
     for($i = 0; $i < $data_count; $i++){
         $nkey = $DATA[$i];
         $nvalue = $_POST[  $DATA[$i] ];
-        
+        //set all posts values to the object
         eval('$obj->set'.$DATA[$i].'(\''.$nvalue.'\');');
         //eval('echo $obj->get'.$DATA[$i].'(\''.$nvalue.'\');');
     }
@@ -83,5 +83,11 @@ if($form_is_valid){
         case 'register':
             eval('$obj->addToDb();');
         break;
+        case 'connexion':
+            if($obj->loadUserFromDb()==1){
+               echo " vous êtes bien connecté !" . $obj->getLogin();
+               $_SESSION['login'] = $obj->getLogin();
+
+            }
     }
 }

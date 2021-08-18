@@ -38,7 +38,7 @@ class controllerManager
                 {
                     foreach($value['dataReq'] as $file)
                     {//load all data files !
-                        require $this->dataDir . $file . ".php";
+                        require_once $this->dataDir . $file . ".php";
                         //echo $this->dataDir . $file . ".php";  
                     }
                 }
@@ -46,7 +46,7 @@ class controllerManager
                 {
                     foreach($value['tempReq'] as $file)
                     {//load all templates files !
-                        require $this->templateDir . $file . ".php";
+                        require_once $this->templateDir . $file . ".php";
                         //echo $this->templateDir . $file . ".php";
                     }
                 }
@@ -74,7 +74,7 @@ class controllerManager
                     {
                         foreach($value['dataReq'] as $file)
                         {//load all data files !
-                            require $this->dataDir . $file . ".php";
+                            require_once $this->dataDir . $file . ".php";
                             //echo $this->dataDir . $file . ".php";  
                         }
                     }
@@ -82,7 +82,7 @@ class controllerManager
                     {
                         foreach($value['tempReq'] as $file)
                         {//load all templates files !
-                            require $this->templateDir . $file . ".php";
+                            require_once $this->templateDir . $file . ".php";
                             //echo $this->templateDir . $file . ".php";
                         }
                     }

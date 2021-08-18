@@ -1,8 +1,8 @@
 <?php
 class file{
-    $file_name;
-    $file_dir;
-    $file_content;
+    private $file_name;
+    private $file_dir;
+    private $file_content;
     public function __construct($file_name, $file_dir){
         $this->file_name = $file_name;
         setDir($file_dir);
