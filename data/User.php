@@ -79,6 +79,9 @@ class User{
     public function loadFromDb(){
 
     }
+    public function getId(){
+        return $this->id;
+    }
     public function addToDb(){
         $query = "SELECT login, count(login) FROM USER where login='$this->login'";
         $exists = 0;

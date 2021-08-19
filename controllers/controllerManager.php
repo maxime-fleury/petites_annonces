@@ -10,9 +10,15 @@ class controllerManager
         $this->dataDir = "./data/";
         $this->templateDir = './templates/';
     }
-    public function addRoute($path, $data, $dataReq, $tempReq){
-        $this->controllers[$path] = array("data" => $data, "dataReq" => $dataReq, "tempReq" => $tempReq);
+    public function addRoute($path, $data, $dataReq, $tempReq, $routeType = 0){
+        $this->controllers[$path] = array("data" => $data, "dataReq" => $dataReq, "tempReq" => $tempReq, $routeType);
         return $this;
+    }
+    public function createNavBar(){
+
+    }
+    public function getBaseUrl(){
+        return $this->baseUrl;
     }
     public function redirect(){
         $request = $_SERVER['REQUEST_URI'];

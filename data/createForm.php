@@ -74,11 +74,11 @@ if($form_is_valid){
     eval('$obj = new ' . $form_class . '();');
     for($i = 0; $i < $data_count; $i++){
         $nkey = $DATA[$i];
-        $nvalue = $_POST[  $DATA[$i] ];
+        $nvalue = addslashes($_POST[  $DATA[$i] ]);
         //set all posts values to the object
-        echo '$obj->set'.ucfirst($DATA[$i]).'(\''.$nvalue.'\');';
+        echo '$obj->set'.ucfirst($DATA[$i]).'(\''.addslashes($nvalue).'\');';
         echo "<br>";
-        eval('$obj->set'.ucfirst($DATA[$i]).'(\''.$nvalue.'\');');
+        eval('$obj->set'.ucfirst($DATA[$i]).'(\''.addslashes($nvalue).'\');');
         //eval('echo $obj->get'.$DATA[$i].'(\''.$nvalue.'\');');
     }
     switch($form_type){
@@ -87,9 +87,10 @@ if($form_is_valid){
         break;
         case 'connexion':
             if($obj->loadUserFromDb()==1){
-               echo " vous êtes bien connecté !" . $obj->getLogin();
-               $_SESSION['login'] = $obj->getLogin();
-
+               echo " vous êtes bien connecté !" . htmlspecialchars($obj->getLogin(), ENT_QUOTES, 'UTF-8');
+               $_SESSION['login'] = htmlspecialchars($obj->getLogin(), ENT_QUOTES, 'UTF-8');
+               $_SESSION['userId'] = intval($obj->getId());
+               
             }
     }
 }

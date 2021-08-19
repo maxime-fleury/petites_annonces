@@ -92,7 +92,6 @@ class Ads{
     public function addToDb(){
         $this->setUserId(0);
         $query = "INSERT INTO ads VALUES(null, '". $this->getTitle()."', '".$this->getPic()."', '".$this->getDescr()."', '".$this->getCat()."', ".$this->getPrice().", ".$this->getUserId().")";
-        echo "<br>".$query."<br>";
         $GLOBALS['dbh']->query($query);
     }
     public function load($id){
@@ -117,7 +116,7 @@ class Ads{
         $res = array();
        $query =  "SELECT * FROM ads ORDER BY id DESC LIMIT $amount";
        if($offset != 0){
-           $query .= " OFFSET $offset ROWS";
+           $query .= " OFFSET $offset";
        }
        foreach ($GLOBALS['dbh']->query($query) as $row) 
        {

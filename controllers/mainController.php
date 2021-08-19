@@ -2,18 +2,20 @@
 session_start();
 require 'data/config.php';
 require 'controllerManager.php';
+$cm = new controllerManager();
+$baseUrl = $cm->getBaseUrl();
 $title = "Welcome !";
 require "./templates/header.php";
-$cm = new controllerManager();
+
 $cm->
 addRoute(
     "/",
-    array("show_class::ads", "amount::10", "show_type::pages"),
+    array("baseUrl::$baseUrl","show_class::ads", "amount::5", "show_type::pages", "showby::cards", "show_names::title=Titre;descr=Description;pic=Image;cat=Categorie;price=Prix"),
     array( "User", "ads", "show"),
     array( "index" )
 )->addRoute(
     "/index",
-    array("show_class::ads", "amount::10", "show_type::pages"),
+    array("baseUrl::$baseUrl","show_class::ads", "amount::5", "show_type::pages", "showby::cards", "show_names::title=Titre;descr=Description;pic=Image;cat=Categorie;price=Prix"),
     array( "User", "ads", "show"),
     array( "index" )
 )->addRoute(
@@ -40,7 +42,7 @@ addRoute(
         "/add",//path
         array( "form_class::ads", "form_type::register", "session_restricted::true" ),
         array( "User", "ads", "createForm" ),
-        array( "connexion" )
+        array( "inscription" )
         )
         ->addRoute(
             "/disconnect",

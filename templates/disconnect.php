@@ -1,6 +1,7 @@
 <?php
 if(isset($_SESSION['login'])){
     unset($_SESSION['login']);
+    unset($_SESSION['userId']);
     $baseUrl = "/post_ads/petites_annonces";
     header("Location: $baseUrl/");
 }
