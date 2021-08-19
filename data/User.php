@@ -9,6 +9,12 @@ $class_elements = array(
     'email' => array("type" => 'VARCHAR', "length" => 255, "null" => false, "isPrimary" => false, "form" => 2),
     'avatar' => array("type" => 'VARCHAR', "length" => 255, "null" => true, "isPrimary" => false, "form" => 2)
 );
+$form_names = array(
+    "login" => "Pseudo",
+    "password" => "Mot de passe",
+    "email" => "Adresse email",
+    "avatar" => "Photo de profil"
+);
 //'form' => 0, hidden from all forms
 //'form' => 1, never hidden
 //'form' => 2, not hidden when $form_type = edit | register 
@@ -22,6 +28,7 @@ class User{
     private $avatar;
     public $dbh;
     public $class_elements;
+    public $form_names;
     public function __contruct($dbh){
         $this->dbh = $GLOBALS['dbh'];
         $this->avatar = null;
@@ -31,6 +38,12 @@ class User{
             'password' => array("type" => 'VARCHAR', "length" => 255, "null" => false, "isPrimary" => false, "form" => 1),
             'email' => array("type" => 'VARCHAR', "length" => 255, "null" => false, "isPrimary" => false, "form" => 2),
             'avatar' => array("type" => 'VARCHAR', "length" => 255, "null" => true, "isPrimary" => false, "form" => 2)
+        );
+        $this->form_names = array(
+            "login" => "Pseudo",
+            "password" => "Mot de passe",
+            "email" => "Adresse email",
+            "avatar" => "Photo de profil"
         );
     }
     public function getPassword(){

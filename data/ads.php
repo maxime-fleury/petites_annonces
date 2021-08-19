@@ -10,6 +10,13 @@ $class_elements = array(
     'price' => array("type" => 'INTEGER', "length" => 10, "null" => false, "isPrimary" => false, "form" => 1),
     'userId' => array("type" => 'INTEGER', "length" => 10, "null" => false, "isPrimary" => false, "form" => 0)
 );
+$form_names = array(
+    "title" => "Titre",
+    "pic" => "Photo",
+    "descr" => "Description",
+    "cat" => "Categories",
+    "price" => "Prix"
+);
 //'form' => 0, hidden from all forms
 //'form' => 1, never hidden
 //'form' => 2, not hidden when $form_type = edit | register 
@@ -24,6 +31,7 @@ class Ads{
     private $price;
     private $userid;
     public $class_elements;
+    public $form_names;
     public function  __construct(){
         $this->dbh = $GLOBALS['dbh'];
         $this->class_elements = array(
@@ -35,8 +43,14 @@ class Ads{
             'price' => array("type" => 'INTEGER', "length" => 10, "null" => false, "isPrimary" => false, "form" => 1),
             'userId' => array("type" => 'INTEGER', "length" => 10, "null" => false, "isPrimary" => false, "form" => 0)
         );
+        $this->form_names = array(
+            "title" => "Titre",
+            "pic" => "Photo",
+            "descr" => "Description",
+            "cat" => "Categories",
+            "price" => "Prix"
+        );
     }
-
     public function getPrice(){
         return $this->price;
     }
