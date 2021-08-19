@@ -1,4 +1,4 @@
-<h1> Connecter-vous !</h1>
+<h1 class='text-center pb-2 text-success'> Connecter-vous !</h1>
 <?php
 $baseUrl = "/post_ads/petites_annonces";
 if(isset($_SESSION['login'])){

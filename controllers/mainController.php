@@ -35,8 +35,8 @@ addRoute(
         array( "connexion" )
     )->addRoute(
         "/a",//path
-        null,//vars for $x = y "x::y", can add as many as you want
-        array( "User", "ads" ),// require all ./data/{var1}.php, ./data/{var2.php} ... can add as many as you want
+        array("baseUrl::$baseUrl", "show_class::ads", "show_type::details"),//vars for $x = y "x::y", can add as many as you want
+        array( "User", "ads", "show" ),// require all ./data/{var1}.php, ./data/{var2.php} ... can add as many as you want
         array( "annonce" )// require all ./template/{page1}.php ...... can add as many as you want
     )->addRoute(
         "/add",//path

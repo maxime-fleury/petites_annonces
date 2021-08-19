@@ -12,9 +12,6 @@ input{
       border-radius: 30px; height:2em; width:15em;
       padding:10px;
     }
-.password-input{
-    margin-left:5px;
-}
 .password-input input{
     width:12em;
     margin-top: 2px;
@@ -28,24 +25,26 @@ if(isset($form_length)){
 //'form' => 0, hidden from all forms
 //'form' => 1, never hidden
 //'form' => 2, not hidden when $form_type = edit | register 
-$form_ .= "<form action='#' method='POST' class='text-center mt-3 text-white bg-dark row g-3 align-items-center'>";
+$form_ .= "<form action='#' method='POST' class='form-floating text-center mt-3 text-white bg-dark row g-3 align-items-center'>";
 foreach($class_elements as $key => $fvalue){//generate form
     if($form_type === "register" | $form_type === "edit"){
         if($fvalue['form'] != 0){//if 0 always hidden
-            $form_ = createInput($key, $fvalue, $form_, $input_types, $form_names);
+            $form_ = createInput($key, $fvalue, $form_, $input_types, $form_names, 50);
         }//if $fvalue['null'] = true  => not REQUIRED
     }else{
         if($fvalue['form'] == 1){//if 1 never hidden
-            $form_ = createInput($key, $fvalue, $form_, $input_types, $form_names);
+            $form_ = createInput($key, $fvalue, $form_, $input_types, $form_names, 100);
         }
     }
 }
-function createInput($key, $kvalue, $form_, $it, $form_names){
-    $form_ .= '<div class="form-group mb-3"><label for="' . $key . '"> ' . ucfirst($form_names[$key]) . '</label><br>';
-    if($key!= "password" && $key != 'email') $form_ .= "<input id='" . $key . "' name='" . $key . "' type='". $it[$kvalue['type']] .  "'" . (!$kvalue['null'] ? " required='required'" : "") . ">";
-    else if($key === "password")$form_ .=  "<span class='password-input input-group mb-3 d-inline-block'><img class='input-group-text d-inline-block input-group-prepend' width='45px' src='https://toppng.com/uploads/preview/this-is-a-graphic-reation-of-a-pad-lock-username-and-password-icon-115534595184fsadfncq6.png'  id='basic-addon1'/><input id='" . $key . "' name='" . $key . "' placeholder='**********' type='password'" . (!$kvalue['null'] ? " required='required'" : "") . "></span>";
-    else if($key === "email") $form_ .=  "<input id='" . $key . "' name='" . $key . "' type='mail'" . (!$kvalue['null'] ? " required='required'" : "") . ">";
-    $form_ .= '</div>';
+function createInput($key, $kvalue, $form_, $it, $form_names, $w){
+    $form_ .= "<div class='container w-" . $w . "'>";
+    $form_ .= '<div class="form-group mb-3 form-floating">';
+    if($key!= "password" && $key != 'email') $form_ .= "<input placeholder=' ' class='text-input form-control is-invalid' id='" . $key . "' name='" . $key . "' type='". $it[$kvalue['type']] .  "'" . (!$kvalue['null'] ? " required='required'" : "") . ">";
+    else if($key === "password")$form_ .=  "<input id='" . $key . "' name='" . $key . "' placeholder='**********' type='password'" . (!$kvalue['null'] ? " class='password-input form-control is-invalid' required='required'" : "") . "></span>";
+    else if($key === "email") $form_ .=  "<input placeholder='mail' class='text-input form-control is-invalid' id='" . $key . "' name='" . $key . "' type='mail'" . (!$kvalue['null'] ? " required='required'" : "") . ">";
+    $form_ .= '<label class="text-dark" for="' . $key . '"> ' . ucfirst($form_names[$key]) . '</label></div>';
+    $form_ .= "</div>";
     return $form_;
 }
 $form_ .=  "<input type='submit' class='btn btn-primary'></form>";

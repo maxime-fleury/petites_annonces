@@ -104,7 +104,11 @@ class Ads{
         $this->id = "";
     }
     public function addToDb(){
-        $this->setUserId(0);
+        if(isset($_SESSION['login'])){
+            $this->setUserId($_SESSION['userId']);
+        }else{
+            $this->setUserId(0);
+        }
         $query = "INSERT INTO ads VALUES(null, '". $this->getTitle()."', '".$this->getPic()."', '".$this->getDescr()."', '".$this->getCat()."', ".$this->getPrice().", ".$this->getUserId().")";
         $GLOBALS['dbh']->query($query);
     }
@@ -122,7 +126,8 @@ class Ads{
                  ->setCat($row["cat"]);
             $count++;
         }
-        return $count;
+
+        return $this;
     }
 
     public function loadX($amount, $offset){
