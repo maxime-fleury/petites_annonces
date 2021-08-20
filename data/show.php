@@ -1,11 +1,19 @@
 <?php
 if((isset($arg) && !empty($arg))){
-    if(is_int($arg)){
+    if(!is_int($arg)){
         $arg = intval($arg);
     }
 }
 else{
     $arg = "1";
+}
+if((isset($amount) && !empty($amount))){
+    if(!is_int($amount)){
+        $amount = intval($amount);
+    }
+}
+else{
+    $amount = 1;
 }
 if(isset($showby)){
     if($showby == "list"){
@@ -17,8 +25,8 @@ if(isset($showby)){
         echo "</tr>";
         //echo $arg . " ... " . gettype($arg);
         eval('$ce = new '.ucfirst($show_class).'();$class_elements = $ce->class_elements;');
-            $offset = 10*(intval($arg)-1);
-            $ObjectS = $ce->loadX(10, $offset);
+            $offset = $amount*(intval($arg)-1);
+            $ObjectS = $ce->loadX($amount, $offset);
         foreach($ObjectS as $el => $el_)
             {  
                 echo "<tr>";
@@ -79,12 +87,16 @@ if(isset($showby)){
                 echo '</p><a href="'.$baseUrl.'/a/';
                 eval("echo \$el_->getId();");
                 
-                echo '" class="btn btn-primary">Voir l\'annonce</a>';
+                echo '" class="btn btn-primary m-4">Voir l\'annonce</a>';
                 if(isset($_SESSION['login'])){
                     eval("\$id = \$el_->getUserId();");
                     if(intval($id) === $_SESSION['userId']){
-                        echo "<a href='edit'>edit</a>";
-                        echo "<a href='edit'>delete</a>";
+                        echo "<a class='btn btn-success btn-sm m-2' href='$baseUrl/edit/";
+                        eval("echo \$el_->getId();");
+                        echo "'><i class='fas fa-edit'></i></a>";
+                        echo "<a class='btn btn-danger btn-sm' href='$baseUrl/delete/";
+                        eval("echo \$el_->getId();");
+                        echo "'><i class='fas fa-trash'></i></a>";
                     }
                 }
                 echo '</div></div></div>';

@@ -40,7 +40,7 @@ addRoute(
         array( "annonce" )// require all ./template/{page1}.php ...... can add as many as you want
     )->addRoute(
         "/add",//path
-        array( "form_class::ads", "form_type::register", "session_restricted::true", "relation::userId", "form_length::25" ),
+        array( "baseUrl::$baseUrl","form_class::ads", "form_type::register", "session_restricted::true", "relation::userId", "form_length::25" ),
         array( "User", "ads", "createForm" ),
         array( "add" )
         )
@@ -49,6 +49,12 @@ addRoute(
             null,
             null,
             array("disconnect")
+        )
+        ->addRoute(
+            "/delete",
+            array("baseUrl::$baseUrl","form_class::ads", "session_restricted::true"),
+            array("User", "ads", "delete"),
+            null
         )
         ->redirect();
 

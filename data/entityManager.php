@@ -36,6 +36,41 @@ class entityManager{
             $content .= "\tpublic function set$uckey(\$$key)\n\t{\n\t\t\$this->$key = \$$key;\n\t}\n";
             $content .= "\tpublic function get$uckey()\n\t{\n\t\treturn \$this->$key;\n\t}\n";
         }
+            $content .= "\tpublic function loadX(\$amount, \$offset)\n\t{\n\t\t
+            \$res = array();\n\t\t
+            \$query =  \"SELECT * FROM $this->className ORDER BY id DESC LIMIT \$amount\";\n\t\t
+            if(\$offset != 0){\n\t\t\$query .= \" OFFSET \$offset\";\n\t\t}
+            \n\t\tforeach (\$GLOBALS['dbh']->query(\$query) as \$row) \n\t\t
+            {\n\t\t
+                 \$res_ = new $this->className .();\n\t\t
+                 \$res_->setId(\$row['id'])\n\t\t
+                        ->
+                 \$res[\$count++] = \$res_;\n\t\t
+           }\n\t\t
+           return $res;\n\t\t
+         }\n\t\t";
+/*
+        
+        public function load($id){
+            //check if this element exists;
+            $this->id = $id;
+            $count = 0;
+            $query = "SELECT * FROM ads WHERE id = $id";
+            foreach ($GLOBALS['dbh']->query($query) as $row) {
+                $this->setPrice($row["price"])
+                     ->setTitle($row["title"])
+                     ->setPic($row["pic"])
+                     ->setDescr($row["descr"])
+                     ->setUserId($row["userId"])
+                     ->setCat($row["cat"]);
+                $count++;
+            }
+    
+            return $this;
+        }
+
+*/
+
         $content .= "\n}";
         echo "<pre class='prettyprint'><code>".$content."</code></pre>";//echo it
     }
@@ -58,6 +93,12 @@ class entityManager{
         return $this;
     }
 }
+$cat = new entityManager("cat");
+$cat->addProperty("id", "INTEGER", 15, false, true, 0)
+    ->addProperty("name", "VARCHAR", 255, false, false, 1)
+    ->addProperty("defaultPic", "VARCHAR", 255, false, false, 1)
+    ->generateClass();
+/*
 $h = new entityManager("ads");
 $h->addProperty("id", "INTEGER", 15, false, true, 0)
   ->addProperty("title", "VARCHAR", 255, false, false, 1)
@@ -73,4 +114,4 @@ $c->addProperty('id', 'INTEGER', 15, false, true, 0)
   ->addProperty('password', 'VARCHAR', 255, false, false, 1)
   ->addProperty('email', 'VARCHAR', 255, false, false, 2)
   ->addProperty('avatar', "VARCHAR", 255, true, false, 2)
-  ->generateClass();
+  ->generateClass();*/

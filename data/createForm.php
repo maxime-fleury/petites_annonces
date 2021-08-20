@@ -2,15 +2,16 @@
 if(isset($session_restricted) && !isset($_SESSION['login'])){
     if($session_restricted)
         header("Location: $baseUrl/");
+       //echo $baseUrl;
 }
 $input_types = array(
     'INTEGER' => "number",
     'VARCHAR' => "text"
 );
 $form_= "<style>  
-input{
-      border-radius: 30px; height:2em; width:15em;
-      padding:10px;
+input[type=text], label, input[type=password], input[type=number], input[type=mail]{
+    border-radius:30px;  
+    padding:10px;
     }
 .password-input input{
     width:12em;
@@ -38,8 +39,8 @@ foreach($class_elements as $key => $fvalue){//generate form
     }
 }
 function createInput($key, $kvalue, $form_, $it, $form_names, $w){
-    $form_ .= "<div class='container w-" . $w . "'>";
-    $form_ .= '<div class="form-group mb-3 form-floating">';
+    $form_ .= "<div class='d-flex justify-content-center d-flex-sm-column w-" . $w . "'>";
+    $form_ .= '<div class="form-group mb-3 form-floating w-75 ">';
     if($key!= "password" && $key != 'email') $form_ .= "<input placeholder=' ' class='text-input form-control is-invalid' id='" . $key . "' name='" . $key . "' type='". $it[$kvalue['type']] .  "'" . (!$kvalue['null'] ? " required='required'" : "") . ">";
     else if($key === "password")$form_ .=  "<input id='" . $key . "' name='" . $key . "' placeholder='**********' type='password'" . (!$kvalue['null'] ? " class='password-input form-control is-invalid' required='required'" : "") . "></span>";
     else if($key === "email") $form_ .=  "<input placeholder='mail' class='text-input form-control is-invalid' id='" . $key . "' name='" . $key . "' type='mail'" . (!$kvalue['null'] ? " required='required'" : "") . ">";
@@ -84,7 +85,7 @@ if($form_is_valid){
         $nkey = $DATA[$i];
         $nvalue = addslashes($_POST[  $DATA[$i] ]);
         //set all posts values to the object
-        echo '$obj->set'.ucfirst($DATA[$i]).'(\''.addslashes($nvalue).'\');';
+        //echo '$obj->set'.ucfirst($DATA[$i]).'(\''.addslashes($nvalue).'\');';
         echo "<br>";
         eval('$obj->set'.ucfirst($DATA[$i]).'(\''.addslashes($nvalue).'\');');
         //eval('echo $obj->get'.$DATA[$i].'(\''.$nvalue.'\');');
@@ -92,7 +93,7 @@ if($form_is_valid){
     switch($form_type){
         case 'register':
             if(isset($session_restricted)){
-                if($session_restricted && issert($_SESSION['userId'])){
+                if($session_restricted && isset($_SESSION['userId'])){
                     $obj->setUserId($_SESSION['userId']);
                 }
             }

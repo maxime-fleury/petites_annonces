@@ -112,6 +112,10 @@ class Ads{
         $query = "INSERT INTO ads VALUES(null, '". $this->getTitle()."', '".$this->getPic()."', '".$this->getDescr()."', '".$this->getCat()."', ".$this->getPrice().", ".$this->getUserId().")";
         $GLOBALS['dbh']->query($query);
     }
+    public function delete(){
+        $query = "DELETE FROM ads WHERE id = $this->id ";
+        $GLOBALS['dbh']->query($query);
+    }
     public function load($id){
         //check if this element exists;
         $this->id = $id;
