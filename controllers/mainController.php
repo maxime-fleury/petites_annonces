@@ -20,7 +20,7 @@ addRoute(
     array( "index" )
 )->addRoute(
     "/inscription",
-    array( "form_class::User", "form_type::register" ),
+    array( "baseUrl::$baseUrl", "form_class::User", "form_type::register" ),
     array( "User", "createForm" ),
     array( "inscription" )
 )->addRoute(
@@ -41,7 +41,7 @@ addRoute(
 )->addRoute(
 "/add",//path
     array( "baseUrl::$baseUrl","form_class::ads", "form_type::register", "session_restricted::true", "relation::userId", "form_length::25" ),
-    array( "User", "ads", "createForm" ),
+    array( "Category" ,"User", "ads", "createForm" ),
     array( "add" )
 )
 ->addRoute(

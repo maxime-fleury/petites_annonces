@@ -9,7 +9,7 @@ $input_types = array(
     'VARCHAR' => "text"
 );
 $form_= "<style>  
-input[type=text], label, input[type=password], input[type=number], input[type=mail]{
+input[type=text], select, label, input[type=password], input[type=number], input[type=mail]{
     border-radius:30px;  
     padding:10px;
     }
@@ -33,19 +33,18 @@ $form_ .= "<form action='#' method='POST' class='form-floating text-center mt-3 
 foreach($class_elements as $key => $fvalue){//generate form
     if($form_type === "register" | $form_type === "edit"){
         if($fvalue['form'] != 0){//if 0 always hidden
-            
-            $form_ = createInput($key, $fvalue, $form_, $input_types, $form_names, $LObj, $obj_empty);
+            $form_ = createInput($key, $fvalue, $form_, $input_types, $form_names, $LObj, $obj_empty, $cat);
         }//if $fvalue['null'] = true  => not REQUIRED
     }else{
         if($fvalue['form'] == 1){//if 1 never hidden
-            $form_ = createInput($key, $fvalue, $form_, $input_types, $form_names, $LObj, $obj_empty);
+            $form_ = createInput($key, $fvalue, $form_, $input_types, $form_names, $LObj, $obj_empty, $cat);
         }
     }
 }
-function createInput($key, $kvalue, $form_, $it, $form_names, $LObj, $obj_empty){
+function createInput($key, $kvalue, $form_, $it, $form_names, $LObj, $obj_empty, $cat){
     //$form_ .= "<div class='d-flex w-" . $w . "'>";
     $form_ .= '<div class="form-group  pt-1 pb-1 m-auto form-floating w-75 ">';
-    if($key!= "password" && $key != 'email') {
+    if($key!= "password" && $key != 'email' && $key != "cat") {
         $uckey = ucfirst($key);
         $form_ .= "<input value='";
         if(!$obj_empty) eval("\$form_ .= \$LObj->get$uckey();");
@@ -61,6 +60,16 @@ function createInput($key, $kvalue, $form_, $it, $form_names, $LObj, $obj_empty)
         if(!$obj_empty) eval("\$form_ .= \$LObj->get$uckey();");
         $form_ .=  "'placeholder='mail' class='text-input form-control is-invalid' id='" . $key . "' name='" . $key . "' type='mail'" . (!$kvalue['null'] ? " required='required'" : "") . ">";
     }
+    else if($key === "cat"){
+        $form_ .= "
+        <select class='text-input form-control is-invalid' name='$key' id='$key'>";
+        $count = 0;
+        foreach($cat->getCat() as $realcats){
+            $form_ .= "<option  value='".$cat->getDefaultImage()[$count]."'>$realcats</option>";
+            $count++;
+        }
+        if(!$obj_empty) eval("\$form_ .= \$LObj->get$uckey();");
+         }
     $form_ .= '<label class="text-dark" for="' . $key . '"> ' . ucfirst($form_names[$key]) . '</label></div>';
     //$form_ .= "</div>";
     return $form_;
@@ -95,6 +104,12 @@ foreach($class_elements as $key => $jvalue){
         }
     }
 }
+if($form_type === "edit"){
+   if($LObj.exists()){
+       
+   }
+   echo "test";
+}
 if($form_is_valid){
     echo "Le formulaire est bien validé";
     eval('$obj = new ' . $form_class . '();');
@@ -115,9 +130,7 @@ if($form_is_valid){
             if(isset($session_restricted)){
                 if($session_restricted && isset($_SESSION['userId'])){
                     $obj->setUserId($_SESSION['userId']);
-                    eval('$obj->addToDb();');
                     echo "registered";
-                    header("Location: $baseUrl/index/Annonce correctement ajouté !");
                 }
             }
             eval('$obj->addToDb();');

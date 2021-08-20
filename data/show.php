@@ -60,7 +60,7 @@ if(isset($showby)){
         echo "</table>";
     }
     if($showby == "cards"){
-        echo '<div class="card container" style="width: 750px;">';
+        echo '<div class="card container" style="max-width: 750px;">';
         $show_names = explode(";", $show_names);
         $i = 0;
         foreach($show_names as $sname){
@@ -81,7 +81,7 @@ if(isset($showby)){
             echo '<div class="row">';
         foreach($ObjectS as $el => $el_)
             {  
-                echo "<div class='col-sm-6 text-center'><div class='card'>";
+                echo "<div class='col-sm-6 text-center'><div class='card  mt-2 mb-2'>";
                 $img = $names['Image'];
                 $titre = $names["Titre"];
                 $description = $names['Description'];

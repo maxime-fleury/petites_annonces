@@ -24,7 +24,7 @@
     <?php
 if(isset($_SESSION['login'])){
     ?>
-    <?php echo "<a href='$baseUrl/disconnect' class='justify-content-end m-1 btn btn-primary'>Se déconnecter</a>";?>
+    <?php echo "<div><a class='btn btn-success' href='$baseUrl/add'>Ajouter une annonce</a></div><a href='$baseUrl/disconnect' class='justify-content-end m-1 btn btn-primary'>Se déconnecter</a>";?>
     <?php
 }
 else{

@@ -54,6 +54,12 @@ class Ads{
     public function getPrice(){
         return $this->price;
     }
+    public function exists(){
+
+        $query = "SELECT id FROM ads WHERE id = $this->id";
+        $res = $GLOBALS['dbh']->query;
+        $res->fetch();
+    }
     public function getId(){
         return $this->id;
     }
@@ -155,7 +161,6 @@ class Ads{
        if($offset > 0){
            $query .= " OFFSET $offset";
        }
-       echo $query;
        foreach ($GLOBALS['dbh']->query($query) as $row) 
        {
             $res_ = new Ads();
