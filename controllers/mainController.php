@@ -16,12 +16,12 @@ addRoute(
 )->addRoute(
     "/index",
     array("baseUrl::$baseUrl","show_class::ads", "amount::5", "show_type::pages", "showby::cards", "show_names::title=Titre;descr=Description;pic=Image;cat=Categorie;price=Prix"),
-    array( "User", "ads", "show"),
+    array( "Category" ,"User", "ads", "show"),
     array( "index" )
 )->addRoute(
     "/inscription",
     array( "baseUrl::$baseUrl", "form_class::User", "form_type::register" ),
-    array( "User", "createForm" ),
+    array( "Category" ,"User", "createForm" ),
     array( "inscription" )
 )->addRoute(
     "/test",
@@ -31,12 +31,12 @@ addRoute(
 )->addRoute(
     "/connexion",
     array( "form_class::User", "form_type::connexion" ),
-    array( "User", "createForm" ),
+    array( "Category" ,"User", "createForm" ),
     array( "connexion" )
 )->addRoute(
 "/a",//path
     array("baseUrl::$baseUrl", "show_class::ads", "show_type::details"),//vars for $x = y "x::y", can add as many as you want
-    array( "User", "ads", "show" ),// require all ./data/{var1}.php, ./data/{var2.php} ... can add as many as you want
+    array( "Category" ,"User", "ads", "show" ),// require all ./data/{var1}.php, ./data/{var2.php} ... can add as many as you want
     array( "annonce" )// require all ./template/{page1}.php ...... can add as many as you want
 )->addRoute(
 "/add",//path
@@ -53,13 +53,13 @@ addRoute(
 ->addRoute(
     "/delete",
     array("baseUrl::$baseUrl","form_class::ads", "session_restricted::true"),
-    array("User", "ads", "delete"),
+    array("Category" ,"User", "ads", "delete"),
     null
 )
 ->addRoute(
     "/edit",
     array( "baseUrl::$baseUrl","form_class::ads", "form_type::edit", "session_restricted::true", "form_length::25" ),
-    array( "User", "ads", "createForm" ),
+    array( "Category" ,"User", "ads", "createForm" ),
     array( "add" )
 )
 ->redirect();

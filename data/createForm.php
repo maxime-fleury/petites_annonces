@@ -9,9 +9,9 @@ $input_types = array(
     'VARCHAR' => "text"
 );
 $form_= "<style>  
-input[type=text], select, label, input[type=password], input[type=number], input[type=mail]{
+input[type=text], .select, label, input[type=password], input[type=number], input[type=mail]{
     border-radius:30px;  
-    padding:10px;
+    magin-bottom: 15px;
     }
 .password-input input{
     width:12em;
@@ -62,7 +62,7 @@ function createInput($key, $kvalue, $form_, $it, $form_names, $LObj, $obj_empty,
     }
     else if($key === "cat"){
         $form_ .= "
-        <select class='text-input form-control is-invalid' name='$key' id='$key'>";
+        <select class='select text-input form-control is-invalid' name='$key' id='$key'>";
         $count = 0;
         foreach($cat->getCat() as $realcats){
             $form_ .= "<option  value='".$cat->getDefaultImage()[$count]."'>$realcats</option>";
@@ -118,7 +118,10 @@ if($form_is_valid){
     }
     for($i = 0; $i < $data_count; $i++){
         $nkey = $DATA[$i];
-        $nvalue = addslashes($_POST[  $DATA[$i] ]);
+        if($nkey === "password"){
+
+        $nvalue = sha1(addslashes($_POST[  $DATA[$i] ]));
+        }else $nvalue = addslashes($_POST[  $DATA[$i] ]);
         //set all posts values to the object
         //echo '$obj->set'.ucfirst($DATA[$i]).'(\''.addslashes($nvalue).'\');';
         echo "<br>";
@@ -133,8 +136,13 @@ if($form_is_valid){
                     echo "registered";
                 }
             }
-            eval('$obj->addToDb();');
-            echo "registered";
+            $obj->addToDb();
+            $obj->loadUserFromDb();
+            if($obj->getClass() == "User"){
+                echo "test";
+               $_SESSION['login'] = htmlspecialchars($obj->getLogin(), ENT_QUOTES, 'UTF-8');
+               $_SESSION['userId'] = intval($obj->getId());
+            }
             header("Location: $baseUrl/index/Bravos !");
         break;
         case 'connexion':

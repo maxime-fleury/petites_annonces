@@ -29,8 +29,10 @@ class User{
     public $dbh;
     public $class_elements;
     public $form_names;
+    public $class = "User";
     public function __contruct($dbh){
         $this->dbh = $GLOBALS['dbh'];
+        $this->class = "User";
         $this->avatar = null;
         $this->class_elements = array(
             'id' => array("type" => 'INTEGER', "length" => 15, "null" => false, "isPrimary" => true, "form" => 0),
@@ -45,6 +47,9 @@ class User{
             "email" => "Adresse email",
             "avatar" => "Photo de profil"
         );
+    }
+    public function getClass(){
+        return $this->class;
     }
     public function getPassword(){
         return $this->password;
