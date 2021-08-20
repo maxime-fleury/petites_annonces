@@ -75,7 +75,8 @@ class controllerManager
                         }
                         //add new var, so if you go to /test/lol, $arg = "lol";
                     }
-                    eval("\$arg = '$request_[2]';");//always check for $request_[2]
+                    $req2 =htmlentities(addslashes($request_[2]));
+                    eval("\$arg = '$req2';");//always check for $request_[2]
                     if($value['dataReq'] != null)
                     {
                         foreach($value['dataReq'] as $file)

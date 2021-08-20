@@ -3,8 +3,8 @@ if(isset($_SESSION['login'])){
     unset($_SESSION['login']);
     unset($_SESSION['userId']);
     $baseUrl = "/post_ads/petites_annonces";
-    header("Location: $baseUrl/");
+    header("Location: $baseUrl/index/Vous-vous êtes bien déconnectés !");
 }
 else{
-    echo "Vous n'êtes pas connecté ! <a href='./index/1'>retour</a>";
+    header("Location: $baseUrl/index/Vous n'êtes pas connectés !");
 }

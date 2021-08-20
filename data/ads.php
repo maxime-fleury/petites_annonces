@@ -81,19 +81,19 @@ class Ads{
         return $this;
     }
     public function setPic($pic){
-       $this->pic = $pic;
+       $this->pic = addslashes($pic);
        return $this;
     }
     public function setCat($cat){
-        $this->cat = $cat;
+        $this->cat = addslashes($cat);
         return $this;
     }
     public function setDescr($descr){
-        $this->descr = $descr;
+        $this->descr = addslashes($descr);
         return $this;
     }
     public function setTitle($title){
-        $this->title = $title;
+        $this->title = addslashes($title);
         return $this;
     }
     public function setUserId($id){
@@ -116,11 +116,22 @@ class Ads{
         $query = "DELETE FROM ads WHERE id = $this->id ";
         $GLOBALS['dbh']->query($query);
     }
+    public function edit($arg){
+        $query = "UPDATE ads
+        SET title = '$this->title', pic = '$this->pic', descr = '$this->descr', cat = '$this->cat', price = $this->price
+        WHERE id = $this->id;";
+        if(intval($_SESSION['userId']) === intval($this->userid)){
+            $GLOBALS['dbh']->query($query);
+            
+        }
+        else echo "vous n'est pas connecté";
+    }
     public function load($id){
         //check if this element exists;
         $this->id = $id;
         $count = 0;
         $query = "SELECT * FROM ads WHERE id = $id";
+        try{
         foreach ($GLOBALS['dbh']->query($query) as $row) {
             $this->setPrice($row["price"])
                  ->setTitle($row["title"])
@@ -130,7 +141,10 @@ class Ads{
                  ->setCat($row["cat"]);
             $count++;
         }
+    }
+    catch (Exception $e){
 
+    }
         return $this;
     }
 
@@ -138,9 +152,10 @@ class Ads{
        $count = 0;
         $res = array();
        $query =  "SELECT * FROM ads ORDER BY id DESC LIMIT $amount";
-       if($offset != 0){
+       if($offset > 0){
            $query .= " OFFSET $offset";
        }
+       echo $query;
        foreach ($GLOBALS['dbh']->query($query) as $row) 
        {
             $res_ = new Ads();
