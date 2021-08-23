@@ -44,8 +44,8 @@ foreach($class_elements as $key => $fvalue){//generate form
 function createInput($key, $kvalue, $form_, $it, $form_names, $LObj, $obj_empty, $cat){
     //$form_ .= "<div class='d-flex w-" . $w . "'>";
     $form_ .= '<div class="form-group  pt-1 pb-1 m-auto form-floating w-75 ">';
-    if($key!= "password" && $key != 'email' && $key != "cat") {
-        $uckey = ucfirst($key);
+    $uckey = ucfirst($key);
+    if($key!= "password" && $key != 'email' && $key != "cat" && $key != "pic") {
         $form_ .= "<input value='";
         if(!$obj_empty) eval("\$form_ .= \$LObj->get$uckey();");
         $form_ .= "' placeholder=' ' class='text-input form-control is-invalid' id='" . $key . "' name='" . $key . "' type='". $it[$kvalue['type']] .  "'" . (!$kvalue['null'] ? " required='required'" : "") . ">";
@@ -60,14 +60,20 @@ function createInput($key, $kvalue, $form_, $it, $form_names, $LObj, $obj_empty,
         if(!$obj_empty) eval("\$form_ .= \$LObj->get$uckey();");
         $form_ .=  "'placeholder='mail' class='text-input form-control is-invalid' id='" . $key . "' name='" . $key . "' type='mail'" . (!$kvalue['null'] ? " required='required'" : "") . ">";
     }
+    else if($key === "pic"){
+        $form_ .=  "<input value='";
+        if(!$obj_empty) eval("\$form_ .= \$LObj->get$uckey();");
+        $form_ .=  "'placeholder='mail' class='text-input form-control' id='" . $key . "' name='" . $key . "' type='mail'" . (!$kvalue['null'] ? " required='required'" : "") . ">";
+    }
     else if($key === "cat"){
         $form_ .= "
         <select class='select text-input form-control is-invalid' name='$key' id='$key'>";
         $count = 0;
         foreach($cat->getCat() as $realcats){
-            $form_ .= "<option  value='".$cat->getDefaultImage()[$count]."'>$realcats</option>";
+            $form_ .= "<option  value='".$realcats."'>$realcats</option>";
             $count++;
         }
+        $form_ .= "</select>";
         if(!$obj_empty) eval("\$form_ .= \$LObj->get$uckey();");
          }
     $form_ .= '<label class="text-dark" for="' . $key . '"> ' . ucfirst($form_names[$key]) . '</label></div>';
@@ -137,9 +143,8 @@ if($form_is_valid){
                 }
             }
             $obj->addToDb();
-            $obj->loadUserFromDb();
             if($obj->getClass() == "User"){
-                echo "test";
+                $obj->loadUserFromDb();
                $_SESSION['login'] = htmlspecialchars($obj->getLogin(), ENT_QUOTES, 'UTF-8');
                $_SESSION['userId'] = intval($obj->getId());
             }

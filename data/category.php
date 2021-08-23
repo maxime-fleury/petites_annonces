@@ -15,6 +15,18 @@ class cat{
     public function getCat(){
         return $this->cat;
     }
+    public function getDefaultImg($cat){
+        $cntdefault = 0;
+        $realcnt = 0;
+        foreach($this->cat as $c){
+            if($c == $cat){
+                $realcnt = $cntdefault;
+            }
+            $cntdefault++;
+            //echo ($c != $cat) . " " . $c . " === " . $cat . "<br>";
+        }
+        return $this->defaultImage[$realcnt];
+    }
     public function getDefaultImage(){
         return $this->defaultImage;
     }

@@ -12,7 +12,7 @@ $class_elements = array(
 );
 $form_names = array(
     "title" => "Titre",
-    "pic" => "Photo",
+    "pic" => "Photo (facultatif)",
     "descr" => "Description",
     "cat" => "Categories",
     "price" => "Prix"
@@ -32,6 +32,7 @@ class Ads{
     private $userid;
     public $class_elements;
     public $form_names;
+    public $class = "ads";
     public function  __construct(){
         $this->dbh = $GLOBALS['dbh'];
         $this->class_elements = array(
@@ -50,6 +51,9 @@ class Ads{
             "cat" => "Categories",
             "price" => "Prix"
         );
+    }
+    public function getClass(){
+        return $this->class;
     }
     public function getPrice(){
         return $this->price;
@@ -174,6 +178,9 @@ class Ads{
             $res[$count++] = $res_;
       }
       return $res;
+    }
+    public function getFormNames(){
+        return $this->form_names;
     }
 }
 
