@@ -122,6 +122,33 @@ class Ads{
         $query = "INSERT INTO ads VALUES(null, '". $this->getTitle()."', '".$this->getPic()."', '".$this->getDescr()."', '".$this->getCat()."', ".$this->getPrice().", ".$this->getUserId().")";
         $GLOBALS['dbh']->query($query);
     }
+    public function searchLike($like, $cat = "all", $amount, $offset){
+        $res = array();
+        $count = 0;
+  
+        if($cat == "all"){//if $cat not specified
+            $query =  "SELECT * FROM ads WHERE descr or title LIKE '%$like%' LIMIT $amount";
+        }
+        else{    
+            $query =  "SELECT * FROM ads WHERE descr or title LIKE '%$like%' AND cat = '$cat' LIMIT $amount";
+        }
+        if($offset > 0){
+            $query .= " OFFSET $offset";
+        }
+        foreach ($GLOBALS['dbh']->query($query) as $row) 
+        {
+            $res_ = new Ads();
+            $res_->setId($row['id'])
+                ->setPrice($row["price"])
+                ->setTitle($row["title"])
+                ->setPic($row["pic"])
+                ->setDescr($row["descr"])
+                ->setUserid($row["userId"])
+                ->setCat($row['cat']);
+            $res[$count++] = $res_;
+        }
+        return $res;
+    }
     public function delete(){
         $query = "DELETE FROM ads WHERE id = $this->id ";
         $GLOBALS['dbh']->query($query);

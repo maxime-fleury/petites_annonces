@@ -77,7 +77,23 @@ if(isset($showby)){
         //echo $arg . " ... " . gettype($arg);
         eval('$ce = new '.ucfirst($show_class).'();$class_elements = $ce->class_elements;');
             $offset = intval(intval($amount)*(intval($arg)-1));
-            $ObjectS = $ce->loadX(intval($amount), $offset);
+            if(isset($isSearch)){
+                if($isSearch == "true"){
+                    $like = $_POST['search'];
+                    if(isset($_POST['cat'])){
+                        $cat = $_POST['cat'];
+                        
+                    }else $cat = "all";
+
+                    $ObjectS = $ce->searchLike($like,"all", $amount, $offset);
+                }
+                else{
+                    $ObjectS = $ce->searchLike( "test", "all", $amount, $offset);
+                }
+            }
+            else
+                $ObjectS = $ce->loadX(intval($amount), $offset);
+                
             echo '<div class="row">';
         foreach($ObjectS as $el => $el_)
             {  

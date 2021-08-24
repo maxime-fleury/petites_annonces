@@ -16,7 +16,7 @@
     <a href='<?php echo $baseUrl;?>/index' class="navbar-brand">Accueil</a>
     <div class='d-flex align-items-center'>
     <form action="<?php echo $baseUrl;?>/search" method='POST' class="d-flex align-items-center">
-      <input class="form-control me-2" type="search" placeholder="Rechercher" aria-label="Rechercher">
+      <input class="form-control me-2" type="search" name='search' placeholder="Rechercher" aria-label="Rechercher">
       <input class="btn btn-outline-success" type="submit" value='Rechercher'>Rechercher
     </form>
     </div>
