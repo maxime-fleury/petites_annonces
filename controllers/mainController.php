@@ -10,8 +10,8 @@ require "./templates/header.php";
 $cm->
 addRoute(
     "/",
-    array("baseUrl::$baseUrl","show_class::ads", "amount::5", "show_type::pages", "showby::cards", "show_names::title=Titre;descr=Description;pic=Image(facultatif);cat=Categorie;price=Prix"),
-    array( "User", "ads", "show"),
+    array("baseUrl::$baseUrl","show_class::ads", "amount::5", "show_type::pages", "showby::cards", "show_names::title=Titre;descr=Description;pic=Image;cat=Categorie;price=Prix"),
+    array( "Category","User", "ads", "show"),
     array( "index" )
 )->addRoute(
     "/index",

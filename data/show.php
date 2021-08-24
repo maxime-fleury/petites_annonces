@@ -132,7 +132,7 @@ if($show_type != "details"){
     else{
         echo "<a href='#' disabled onclick='return false;' class='col-4 btn btn-lg btn-secondary '/><i class='fas fa-arrow-left'></i></a>'";
     }
-    if($amount*$arg < $cnt){
+    if($amount*$arg <= $cnt){
         echo "<a href='$baseUrl/index/".(intval($arg)+1)."' class='col-4 btn btn-lg btn-primary'/><i class='fas fa-arrow-right'></i></a>'";
     }
     else{
