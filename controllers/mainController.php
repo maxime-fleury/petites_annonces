@@ -64,8 +64,8 @@ addRoute(
 )
 ->addRoute(
     "/search",
-    array("baseUrl::$baseUrl","show_class::ads", "amount::5", "show_type::pages", "showby::cards", "show_names::title=Titre;descr=Description;pic=Image;cat=Categorie;price=Prix","isSearch::true"),
-    array( "Category","User", "ads", "show"),
+    array("baseUrl::$baseUrl","show_class::ads", "amount::5", "show_type::pages", "showby::cards", "show_names::title=Titre;descr=Description;pic=Image;cats=Categorie;price=Prix","isSearch::true"),
+    array( "Category", "User", "ads", "show"),
     array( "index" )
 )->addRoute(
 "/my",

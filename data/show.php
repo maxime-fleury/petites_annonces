@@ -81,13 +81,32 @@ if(isset($showby)){
             $offset = intval(intval($amount)*(intval($arg)-1));
             if(isset($isSearch)){
                 if($isSearch == "true"){
-                    $like = $_POST['search'];
+                    if(isset($_POST['search']))
+                        $like = $_POST['search'];
+                    else $like = " ";
                     if(isset($_POST['cat'])){
-                        $cat = $_POST['cat'];
+                        $cats = $_POST['cat'];
                         
-                    }else $cat = "all";
+                    }else $cats = "all";
 
                     $ObjectS = $ce->searchLike($like,"all", $amount, $offset);
+                   echo " <div class='container'>
+    <div class='d-flex align-items-center'>
+    <form action='".$baseUrl."/search' method='POST' class='d-flex align-items-center'>
+      <input class='form-control me-2' type='search'";
+       if(isset($_POST['search'])) echo " value='" . $_POST['search'] . "'";
+       echo " name='search' placeholder='Rechercher' aria-label='Rechercher'>";
+       echo "<select class='select text-input form-control' name='cat' id='cat'>";
+       $count = 0;
+       foreach($cat->getCat() as $realcats){
+           echo  "<option  value='".$realcats."'>$realcats</option>";
+           $count++;
+       }
+       echo "</select>
+      <input class='btn btn-outline-success' type='submit' value='Rechercher'>
+    </form>
+    </div>
+    ";
                 }
                 else{
                     $ObjectS = $ce->searchLike( "test", "all", $amount, $offset);
