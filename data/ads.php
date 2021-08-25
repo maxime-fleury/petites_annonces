@@ -185,13 +185,20 @@ class Ads{
         return $this;
     }
 
-    public function loadX($amount, $offset){
+    public function loadX($amount, $offset, $mine = false){
        $count = 0;
         $res = array();
-       $query =  "SELECT * FROM ads ORDER BY id DESC LIMIT $amount";
+       $query =  "SELECT * FROM ads";
+       if($mine == true){
+            $query .= " WHERE userId = " . $_SESSION['userId'];
+        }
+         $query .= " ORDER BY id DESC LIMIT $amount";
+       
        if($offset > 0){
            $query .= " OFFSET $offset";
        }
+
+       //echo $query;
        foreach ($GLOBALS['dbh']->query($query) as $row) 
        {
             $res_ = new Ads();

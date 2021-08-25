@@ -67,8 +67,12 @@ addRoute(
     array("baseUrl::$baseUrl","show_class::ads", "amount::5", "show_type::pages", "showby::cards", "show_names::title=Titre;descr=Description;pic=Image;cat=Categorie;price=Prix","isSearch::true"),
     array( "Category","User", "ads", "show"),
     array( "index" )
-)
-->redirect();
+)->addRoute(
+"/my",
+array("baseUrl::$baseUrl","show_class::ads", "amount::ALL", "show_type::pages", "showby::cards", "show_names::title=Titre;descr=Description;pic=Image;cat=Categorie;price=Prix", "show_my::true", "session_restricted::true"),
+array( "Category","User", "ads", "show"),
+array( "index" ))->redirect();
+
 echo '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>';
 echo "
 

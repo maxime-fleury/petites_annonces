@@ -41,7 +41,7 @@ if(isset($showby)){
         //echo $arg . " ... " . gettype($arg);
         eval('$ce = new '.ucfirst($show_class).'();$class_elements = $ce->class_elements;');
             $offset = $amount*(intval($arg)-1);
-            $ObjectS = $ce->loadX($amount, $offset);
+            $ObjectS = $ce->loadX($amount, $offset, false);
         foreach($ObjectS as $el => $el_)
             {  
                 echo "<tr>";
@@ -60,6 +60,8 @@ if(isset($showby)){
         echo "</table>";
     }
     if($showby == "cards"){
+        if($amount == "ALL")
+            $amount = 10;
         echo '<div class="card container" style="max-width: 750px;">';
         $show_names = explode(";", $show_names);
         $i = 0;
@@ -91,9 +93,16 @@ if(isset($showby)){
                     $ObjectS = $ce->searchLike( "test", "all", $amount, $offset);
                 }
             }
-            else
-                $ObjectS = $ce->loadX(intval($amount), $offset);
-                
+            else{
+                if(isset($show_my)){
+                    if($show_my == "true"){
+                        $ObjectS = $ce->loadX(intval($amount), $offset, true);
+                    }
+                    else $ObjectS = $ce->loadX(intval($amount), $offset, false);
+                }
+                else
+                $ObjectS = $ce->loadX(intval($amount), $offset, false);
+            }
             echo '<div class="row">';
         foreach($ObjectS as $el => $el_)
             {  
